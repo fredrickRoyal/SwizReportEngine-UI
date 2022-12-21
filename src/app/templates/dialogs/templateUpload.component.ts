@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TemplateService } from '../template.service';
 
 @Component({
     selector: 'app-template-upload',
@@ -11,10 +13,11 @@ export class TemplateUploadComponet {
     @ViewChild('fileInput') fileInput: ElementRef;
 
     fileAttr = 'Choose File';
+    description = ''
 
     selectedFile: File = null;
 
-    constructor(private httpClient:HttpClient){
+    constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private templateService: TemplateService) {
 
     }
 
@@ -44,21 +47,37 @@ export class TemplateUploadComponet {
     onFileSelected(event: any) {
         this.fileAttr = '';
         this.selectedFile = <File>event.target.files[0];
-        this.fileAttr= this.selectedFile.name;
-        console.log(event);
+        this.fileAttr = this.selectedFile.name;
+        this.description = this.selectedFile.name.split(".")[0];
+        //console.log(event);
     }
 
-    onUpload() { 
+    onUpload() {
 
-        const formData=new FormData();
-        formData.append('file',this.selectedFile);
-        this.selectedFile.name;
-        console.log("Now uploading: "+this.selectedFile.name);
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+        formData.append('description', this.description);
 
-        this.httpClient.post("http://localhost:1500/templates/upload",formData).subscribe(resp=>{
-            console.log(resp);
+        console.log("Now uploading: " + this.selectedFile.name);
+
+        this.templateService.onUpload(formData).subscribe(resp => {
+
+            if (resp.status) {
+
+                this.fileAttr = '';
+                this.description = ''
+
+                this.snackBar.open("Template successfully uploaded", "Ok", {
+                    duration: 2000,
+                });
+            } else {
+
+                this.snackBar.open("" + resp.message, "Ok");
+            }
         });
 
     }
 
-}
+
+
+} 

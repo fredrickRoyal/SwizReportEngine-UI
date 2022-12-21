@@ -1,40 +1,27 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'
+import { map } from 'rxjs';
+import { ResponseData } from '../ResponseData';
 import { TemplateDTO } from './Template.dto'
 
 @Injectable({ providedIn: 'root' })
 export class TemplateService {
 
-    templates: TemplateDTO[] = [
-        {
-            "id": "iuhhere98232",
-            "fileName": "Learner attendence report.docs",
-            "datePublished": "21/11/20202",
-            "publishedBy": "Fredrick Kasoma",
-            "documentType": "template",
-            "description": "learner attendance report",
-            "publishStatus": "published",
-            "folder": "/templates",
-            "refId": "o0993283",
-            "filePath": "/templates/o0993283",
-            "fileType": "doc"
-        }, {
-            "id": "iuhhere98232",
-            "fileName": "Learner attendence report.docs",
-            "datePublished": "21/11/20202",
-            "publishedBy": "Fredrick Kasoma",
-            "documentType": "template",
-            "description": "learner attendance report",
-            "publishStatus": "published",
-            "folder": "/templates",
-            "refId": "o0993283",
-            "filePath": "/templates/o0993283",
-            "fileType": "doc"
-        }
-    ]
+    constructor(private httpClient: HttpClient) {
+
+    }
 
     getUploadedTemplates() {
-        return this.templates;
+
+        return this.httpClient.get<ResponseData<TemplateDTO[]>>("http://localhost:1500/templates/all");
+    }
+
+    onUpload(formData: FormData) {
+
+        return this.httpClient.post<ResponseData<String>>("http://localhost:1500/templates/upload", formData);
+
     }
 
 }
+
 

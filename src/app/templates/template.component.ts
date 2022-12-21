@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,11 +23,11 @@ export class TemplateComponent {
     @ViewChild(TemplateUploadComponet) uploadDialog!: TemplateUploadComponet
 
     columnHeaderNames: string[] = [
+        'select',
         'id',
         'fileName',
         'datePublished',
         'publishedBy',
-        'documentType',
         'description',
         'publishStatus',
         'folder',
@@ -34,11 +35,55 @@ export class TemplateComponent {
         'filePath',
         'fileType'];
 
+
+    selection = new SelectionModel<TemplateDTO>(true, []);
+
+
+    /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: TemplateDTO): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${1}`;
+  }
+
     dataSource: MatTableDataSource<TemplateDTO>;
+
+
+    templates: TemplateDTO[] = [];
 
     constructor(private templateService: TemplateService, public dialog: MatDialog) {
 
-        this.dataSource = new MatTableDataSource(templateService.getUploadedTemplates());
+        this.loadUploadedTemplates(); 
+    }
+
+    loadUploadedTemplates() {
+
+        this.templateService.getUploadedTemplates().subscribe(response => {
+
+            this.templates = response.data;
+
+            this.dataSource = new MatTableDataSource(this.templates);
+
+        });
+
     }
 
     applyFilter(event: Event) {
@@ -51,17 +96,24 @@ export class TemplateComponent {
     }
 
     uploadTemplete() {
-          
-        const dialogRef = this.dialog.open(TemplateUploadComponet,{
+
+        const dialogRef = this.dialog.open(TemplateUploadComponet, {
             width: '400px'
 
-          });
+        });
 
         dialogRef.afterClosed().subscribe(result => {
+
             console.log(`Dialog result: ${result}`);
+
+            this.loadUploadedTemplates();
         });
 
         console.log("loading file upload window");
+    }
+
+    onRefresh() {
+        this.loadUploadedTemplates();
     }
 
 
