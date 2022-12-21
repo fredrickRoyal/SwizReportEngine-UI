@@ -1,0 +1,44 @@
+
+    mat-sidenav-container{
+      width: 100%;
+    }
+    
+    mat-sidenav{
+      width: 15%;
+      background-color: rgba(100, 87, 113, 0.4);
+    }
+    
+    mat-sidenav-content{
+      padding: 8px;
+      height: 92vh;
+      width: 83%;
+      background: #dce6e0;
+    }
+    
+    #content-container{
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    
+
+
+
+
+
+// .example-container {
+//     position: absolute;
+//     //top: 0;
+//     // bottom: 5;
+//     // left: 0;
+//     // right: 0;
+//     // height: 100%;
+//     //background-color: #ffffff;
+//   }
+  
+//   .example-events {
+//     width: 300px;
+//     height: 200px;
+//     overflow: auto;
+//     // border: 1px solid #555;
+//   }

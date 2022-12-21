@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>{{appName}}</span>
+    <span class="example-spacer"></span>
+    <span>
+        <p [innerText]="time"></p>
+    </span>
+
+    <p *ngIf="created">{{time}}</p>
+    <p *ngIf="!created">Testing2</p>
+
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
+
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon (click)="onClickAvator()">person_outline</mat-icon>
+
+    </button>
+</mat-toolbar>
