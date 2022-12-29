@@ -7,16 +7,17 @@
     <span>
         <p [innerText]="time"></p>
     </span>
-
-    <p *ngIf="created">{{time}}</p>
-    <p *ngIf="!created">Testing2</p>
-
+  
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
         <mat-icon>favorite</mat-icon>
     </button>
 
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon (click)="onClickAvator()">person_outline</mat-icon>
-
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon (click)="onClickAvator()">person_outline</mat-icon> 
     </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>My Account</button>
+        <button mat-menu-item (click)="logout()">Logout</button> 
+    </mat-menu>
+  
 </mat-toolbar>

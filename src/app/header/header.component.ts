@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { KeycloakService } from 'keycloak-angular'
 
 @Component({
     selector: 'app-header',
@@ -12,7 +13,9 @@ export class HeaderComponent implements OnInit {
     timeout: number = 1000;
     created = false;
 
-    constructor() {
+    redirectUri: string = "http://localhost:4200";
+
+    constructor(private keycloakService: KeycloakService) {
 
         setInterval(() => {
             //console.log("The time is going so fast:");
@@ -25,6 +28,13 @@ export class HeaderComponent implements OnInit {
         console.log("loading context menu");
         this.created = !this.created;
 
+    }
+
+   async logout() {
+        console.log("Logout out");
+
+        await this.keycloakService.logout();
+         
     }
 
     ngOnInit(): void {
