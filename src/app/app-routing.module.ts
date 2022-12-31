@@ -9,11 +9,11 @@ import { TemplateComponent } from './templates/template.component';
 import { UserComponent } from './users/user.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'templates', component: TemplateComponent, canActivate: [AuthGuard] },
-  { path: 'apis', component: APIComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'users', component: UserComponent},
+  { path: 'templates', component: TemplateComponent},
+  { path: 'apis', component: APIComponent },
 
 
 ];

@@ -43,6 +43,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { KeycloakAngularModule } from 'keycloak-angular';
+import { AppOAuthModule } from './app-OAuth.module';
+import { initializeOAuth } from './init/OAuth-init.factory';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 
 //import {AfterViewInit, Component, ViewChild} from '@angular/core';
@@ -87,17 +90,19 @@ import { KeycloakAngularModule } from 'keycloak-angular';
     MatSidenavModule,
     MatIconModule,
     MatDividerModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    AppOAuthModule,
   ],
-  providers: [
 
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
-    }
+  providers: [
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeOAuth,
+    //   multi: true,
+    //   deps: [OAuthService],
+    // }
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
